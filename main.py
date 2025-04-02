@@ -1,11 +1,9 @@
 from camera import CV2Camera
 from dependency_injector import DependencyInjector
 
-dependency_injector = DependencyInjector()
-
 if __name__ == '__main__':
 
-    dependency_injector.initialize()
+    DependencyInjector.initialize()
 
     camera = CV2Camera()
 
@@ -13,7 +11,6 @@ if __name__ == '__main__':
 
     while True:
         camera.read_frame()
-
 
         camera.detect_faces()
 

@@ -28,7 +28,7 @@ class CV2Camera:
         if self._can_take_picture():
             image = self.current_frame[y:y+h, x:x+w]
             gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            cv2.imwrite('face.jpg', gray_image)
+            cv2.imwrite('resources/face.jpg', gray_image)
             self.image_last_time_taken = datetime.datetime.now()
 
     def read_frame(self):
