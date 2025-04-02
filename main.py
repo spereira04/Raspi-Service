@@ -1,5 +1,6 @@
 from camera import CV2Camera
 from dependency_injector import DependencyInjector
+import time
 
 if __name__ == '__main__':
 
@@ -14,12 +15,8 @@ if __name__ == '__main__':
 
         camera.detect_faces()
 
-        if not camera.faces_detected():
-            continue
-
-        camera.draw_faces_in_frame()
-
         camera.show_frame("Face recon")
+        
 
         if camera.check_for_exit():
             break

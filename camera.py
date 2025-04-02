@@ -36,13 +36,17 @@ class CV2Camera:
 
     def detect_faces(self):
         self.current_faces = self.haar_cascade.detectMultiScale(
-            self.current_frame, scaleFactor=1.05, minNeighbors=2, minSize=(300, 300)
+            self.current_frame, scaleFactor=1.05, minNeighbors=3, minSize=(300, 300)
         )
+        self._draw_faces_in_frame()
 
     def faces_detected(self):
         return len(self.current_faces) >= 1
 
-    def draw_faces_in_frame(self):
+    def _draw_faces_in_frame(self):
+        if len(self.current_faces) < 1:
+            return
+        
         x, y, w, h = self.current_faces[0]
 
         cv2.rectangle(self.current_frame, (x, y), (x+h, y+w), (0, 0, 255), 2)
