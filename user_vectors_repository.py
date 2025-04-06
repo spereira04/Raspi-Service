@@ -17,4 +17,4 @@ class UserVectorRepository:
         rows = cur.fetchall()
         conn.close()
 
-        return rows
+        return rows[0]

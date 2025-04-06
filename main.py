@@ -6,7 +6,7 @@ if __name__ == '__main__':
 
     DependencyInjector.initialize()
 
-    camera = CV2Camera()
+    camera = CV2Camera(DependencyInjector.user_vectors_service)
 
     camera.verify_input_video_capture_device()
 
@@ -16,7 +16,6 @@ if __name__ == '__main__':
         camera.detect_faces()
 
         camera.show_frame("Face recon")
-        
 
         if camera.check_for_exit():
             break

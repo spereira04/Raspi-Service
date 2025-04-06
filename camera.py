@@ -2,8 +2,11 @@ import cv2
 from cv2.typing import MatLike
 import datetime
 import sys
+from user_vectors_service import UserVectorsService
 
 class CV2Camera:
+
+    user_vectors_service: UserVectorsService
 
     haar_cascade = cv2.CascadeClassifier("./haarcascade_frontalface_default.xml")
     video_capture = cv2.VideoCapture(0)
@@ -11,13 +14,14 @@ class CV2Camera:
     image_last_time_taken = datetime.datetime.now()
 
     TIME_BETWEEN_PICTURES = 5
+    PICTURE_PATH = 'resources/face.jpg'
 
     current_faces = []
     current_frame_ret = False
     current_frame = None
 
-    def __init__(self):
-        pass
+    def __init__(self, user_vectors_service: UserVectorsService):
+        self.user_vectors_service = user_vectors_service
 
     def _can_take_picture(self):
         current_time = datetime.datetime.now()
@@ -28,8 +32,9 @@ class CV2Camera:
         if self._can_take_picture():
             image = self.current_frame[y:y+h, x:x+w]
             gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            cv2.imwrite('resources/face.jpg', gray_image)
+            cv2.imwrite(self.PICTURE_PATH, gray_image)
             self.image_last_time_taken = datetime.datetime.now()
+            self.user_vectors_service.look_for_similar_user_vector(self.PICTURE_PATH)
 
     def read_frame(self):
         self.current_frame_ret, self.current_frame = self.video_capture.read()
