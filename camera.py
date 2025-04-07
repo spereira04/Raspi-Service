@@ -34,6 +34,7 @@ class CV2Camera:
             gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             cv2.imwrite(self.PICTURE_PATH, gray_image)
             self.image_last_time_taken = datetime.datetime.now()
+            # self.user_vectors_service.save_embedding()
             self.user_vectors_service.look_for_similar_user_vector(self.PICTURE_PATH)
 
     def read_frame(self):

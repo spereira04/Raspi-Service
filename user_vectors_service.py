@@ -20,7 +20,7 @@ class UserVectorsService:
         if numpy.linalg.norm(embedding-ast.literal_eval(most_similar[1])) > 10:
             print("ACCESS DENIED")
         else:
-            print('ACCESS GRANTED')
+            print('ACCESS GRANTED ' + most_similar[0])
 
     def save_embedding(self):
         conn_string = "host='localhost' dbname='postgres' user='myuser' password='mypassword'"
@@ -29,7 +29,7 @@ class UserVectorsService:
         ibed = imgbeddings()
 
         embedding = ibed.to_embeddings("resources/face.jpg")[0]
-        cur.execute('INSERT INTO uservectors values (%s,%s)', ('Santiago', embedding.tolist()))
+        cur.execute('INSERT INTO uservectors values (%s,%s)', ('Federico', embedding.tolist()))
         conn.commit()
         conn.close()
         
