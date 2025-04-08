@@ -22,6 +22,9 @@ class UserVectorsService:
         else:
             print('ACCESS GRANTED ' + most_similar[0])
 
+
+    #Only in case of wanting to save someone for testing
+    #TODO Delete when not necessary
     def save_embedding(self):
         conn_string = "host='localhost' dbname='postgres' user='myuser' password='mypassword'"
         conn = psycopg2.connect(conn_string)
