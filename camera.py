@@ -3,6 +3,7 @@ from cv2.typing import MatLike
 import datetime
 import sys
 from user_vectors_service import UserVectorsService
+import threading
 
 class CV2Camera:
 
@@ -35,7 +36,8 @@ class CV2Camera:
             cv2.imwrite(self.PICTURE_PATH, gray_image)
             self.image_last_time_taken = datetime.datetime.now()
             # self.user_vectors_service.save_embedding()
-            self.user_vectors_service.look_for_similar_user_vector(self.PICTURE_PATH)
+            threading.Thread(target=self.user_vectors_service.look_for_similar_user_vector, args=(self.PICTURE_PATH,)).start()
+            # self.user_vectors_service.look_for_similar_user_vector(self.PICTURE_PATH)
 
     def read_frame(self):
         self.current_frame_ret, self.current_frame = self.video_capture.read()

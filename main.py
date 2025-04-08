@@ -1,6 +1,5 @@
 from camera import CV2Camera
 from dependency_injector import DependencyInjector
-import time
 
 if __name__ == '__main__':
 
