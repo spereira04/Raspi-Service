@@ -1,0 +1,8 @@
+opencv-python-headless
+imgbeddings
+psycopg2-binary
+grpcio-tools
+
+
+comando generador de archivos para grpc
+python -m grpc_tools.protoc -I. --python_out=./build/proto --pyi_out=./build/proto --grpc_python_out=./build/proto ./access.proto

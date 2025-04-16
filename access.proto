@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option java_multiple_files = false;
+option java_package = "org.springframework.grpc.sample.proto";
+option java_outer_classname = "AccessProto";
+
+service Access {
+    rpc SumbitSuccessfulAccess(SuccessfulAccessDTO) returns (SubmitResponseDTO) {} 
+    
+    rpc SumbitFailedAccess(FailedAccessDTO) returns (SubmitResponseDTO) {} 
+}
+
+message SuccessfulAccessDTO {
+    int64 time = 1;
+    string firstName = 2;
+    string lastName = 3;
+    string cid = 4;
+}
+
+message FailedAccessDTO {
+    int64 time = 1;
+}
+
+message SubmitResponseDTO {
+    string response = 1;
+}
