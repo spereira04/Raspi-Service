@@ -1,25 +1,30 @@
 from user_vectors_service import UserVectorsService
-from user_vectors_repository import UserVectorRepository
-from access_service import AccesService
+from access_service import AccessService
+
+import os
+from dotenv import find_dotenv, load_dotenv
 
 class DependencyInjector:
     
     user_vectors_service: UserVectorsService
-    user_vectors_repository: UserVectorRepository
 
-    access_service: AccesService
+    access_service: AccessService
 
     @staticmethod
     def _create_user_vectors_service():
-        DependencyInjector.user_vectors_repository = UserVectorRepository("host='localhost' dbname='postgres' user='myuser' password='mypassword'")
-        DependencyInjector.user_vectors_service = UserVectorsService(DependencyInjector.user_vectors_repository)
+        DependencyInjector.user_vectors_service = UserVectorsService(os.getenv("user-vectors-service-base-url"))
 
     @staticmethod
     def _create_access_service():
-        DependencyInjector.access_service = AccesService('10.252.50.2:9090')
+        DependencyInjector.access_service = AccessService(os.getenv("access-service-base-url"))
 
     @staticmethod
     def initialize():
+
+        dotenv_path = find_dotenv()
+
+        load_dotenv(dotenv_path)
+
         DependencyInjector._create_user_vectors_service()
         DependencyInjector._create_access_service()
 

@@ -37,7 +37,7 @@ class CV2Camera:
             self.image_last_time_taken = datetime.datetime.now()
             # self.user_vectors_service.save_embedding()
             threading.Thread(target=self.user_vectors_service.look_for_similar_user_vector, args=(self.PICTURE_PATH,)).start()
-            # self.user_vectors_service.look_for_similar_user_vector(self.PICTURE_PATH)
+
 
     def read_frame(self):
         self.current_frame_ret, self.current_frame = self.video_capture.read()

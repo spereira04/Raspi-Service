@@ -1,18 +1,19 @@
-from build.proto.access_pb2_grpc import AccessStub
-from build.proto.access_pb2 import FailedAccessDTO
+
 import grpc
+import access_pb2, access_pb2_grpc
 
-class AccesService:
+class AccessService:
 
-    stub: AccessStub
+    stub: access_pb2_grpc.AccessStub
 
     def __init__(self, channel_url):
         channel = grpc.insecure_channel(channel_url)
-        self.stub = AccessStub(channel)
+        self.stub = access_pb2_grpc.AccessStub(channel)
 
 
-    def send_successful_access(self):
-        self.stub.SumbitSuccessfulAccess('{}')
+    def send_successful_access(self, time, firstName, lastName, cid):
+        successfulAccessDTO = access_pb2.SuccessfulAccessDTO(time=time, firstName=firstName, lastName=lastName, cid=cid)
+        response = self.stub.SubmitSuccessfulAccess(successfulAccessDTO)
 
-    def send_unsuccessful_access(self):
-        self.stub.SumbitFailedAccess(FailedAccessDTO(time=1744146241))
+    def send_unsuccessful_access(self, time):
+        self.stub.SubmitFailedAccess(access_pb2.FailedAccessDTO(time=time))
