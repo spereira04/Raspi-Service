@@ -14,7 +14,7 @@ class CV2Camera:
 
     image_last_time_taken = datetime.datetime.now()
 
-    TIME_BETWEEN_PICTURES = 5
+    TIME_BETWEEN_PICTURES = 8
     PICTURE_PATH = 'resources/face.jpg'
 
     current_faces = []

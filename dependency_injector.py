@@ -12,7 +12,7 @@ class DependencyInjector:
 
     @staticmethod
     def _create_user_vectors_service():
-        DependencyInjector.user_vectors_service = UserVectorsService(os.getenv("user-vectors-service-base-url"))
+        DependencyInjector.user_vectors_service = UserVectorsService(os.getenv("user-vectors-service-base-url"), DependencyInjector.access_service)
 
     @staticmethod
     def _create_access_service():
@@ -25,8 +25,9 @@ class DependencyInjector:
 
         load_dotenv(dotenv_path)
 
-        DependencyInjector._create_user_vectors_service()
         DependencyInjector._create_access_service()
+        DependencyInjector._create_user_vectors_service()
+        
 
     
 

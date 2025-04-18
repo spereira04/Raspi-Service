@@ -13,7 +13,7 @@ class AccessService:
 
     def send_successful_access(self, time, firstName, lastName, cid):
         successfulAccessDTO = access_pb2.SuccessfulAccessDTO(time=time, firstName=firstName, lastName=lastName, cid=cid)
-        response = self.stub.SubmitSuccessfulAccess(successfulAccessDTO)
+        return self.stub.SubmitSuccessfulAccess(successfulAccessDTO)
 
     def send_unsuccessful_access(self, time):
-        self.stub.SubmitFailedAccess(access_pb2.FailedAccessDTO(time=time))
+        return self.stub.SubmitFailedAccess(access_pb2.FailedAccessDTO(time=time))
