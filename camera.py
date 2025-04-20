@@ -9,7 +9,8 @@ class CV2Camera:
 
     user_vectors_service: UserVectorsService
 
-    haar_cascade = cv2.CascadeClassifier("./haarcascade_frontalface_default.xml")
+    # haar_cascade = cv2.CascadeClassifier("./haarcascade_frontalface_default.xml")
+    haar_cascade = cv2.CascadeClassifier(cv2.data.haarcascades +  'haarcascade_frontalface_default.xml')
     video_capture = cv2.VideoCapture(0)
 
     image_last_time_taken = datetime.datetime.now()
@@ -33,10 +34,11 @@ class CV2Camera:
         if self._can_take_picture():
             image = self.current_frame[y:y+h, x:x+w]
             gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            cv2.imwrite(self.PICTURE_PATH, gray_image)
+            _, buffer = cv2.imencode('.jpg', gray_image)
+            # cv2.imwrite(self.PICTURE_PATH, gray_image)
             self.image_last_time_taken = datetime.datetime.now()
             # self.user_vectors_service.save_embedding()
-            threading.Thread(target=self.user_vectors_service.look_for_similar_user_vector, args=(self.PICTURE_PATH,)).start()
+            threading.Thread(target=self.user_vectors_service.look_for_similar_user_vector, args=(buffer,)).start()
 
 
     def read_frame(self):
