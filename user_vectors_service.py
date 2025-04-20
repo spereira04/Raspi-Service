@@ -4,6 +4,8 @@ import numpy as np
 import time
 import json
 from access_service import AccessService
+from PIL import Image
+import io
 
 class UserVectorsService:
 
@@ -14,10 +16,11 @@ class UserVectorsService:
         self.baseUrl = baseUrl
         self.accessService = accessService
 
-    def look_for_similar_user_vector(self, picture):
+    def look_for_similar_user_vector(self, buffer):
         access_time = int(time.time())
         ibed = imgbeddings()
-        embedding = ibed.to_embeddings(picture)[0]
+        # embedding = ibed.to_embeddings(picture)[0]
+        embedding = ibed.to_embeddings(Image.open(io.BytesIO(buffer)))[0]
         
         response = requests.get(url=self.baseUrl+'/vector', json={'vector': np.float32(embedding).tolist()})
         body = json.loads(response.content)
@@ -28,6 +31,7 @@ class UserVectorsService:
         else:
             gresponse = self.accessService.send_unsuccessful_access(access_time)
         
+        print(gresponse)
         # handle response
 
 
