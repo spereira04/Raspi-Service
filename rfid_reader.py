@@ -1,18 +1,20 @@
-from imgbeddings import imgbeddings
 from user_rfid_service import UserRFIDService
-from access_service import AccessService
-from PIL import Image
-import io
+import RPi.GPIO as GPIO
+from mfrc522 import SimpleMFRC522
 
 class RFIDReader:
 
     user_rfid_service: UserRFIDService
+    reader: SimpleMFRC522
 
-    def __init__(self, user_rfid_service):
+    def __init__(self, user_rfid_service, simple_MFRC522):
         self.user_rfid_service = user_rfid_service
+		self.reader = simple_MFRC522
 
     def read_rfid(self):
-        read_code = input('METEMELA: ')
-        self.user_rfid_service.look_for_user_rfid(int(read_code))
+        id, _ = reader.read()
+        # print(id)
+
+        self.user_rfid_service.look_for_user_rfid(int(id))
 
 

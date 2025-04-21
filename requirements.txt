@@ -3,6 +3,10 @@ imgbeddings
 psycopg2-binary
 grpcio-tools
 python-dotenv
+lgpio
+mfrc522
+RPi.GPIO
+rpi-lgpio
 
 
 comando generador de archivos para grpc
