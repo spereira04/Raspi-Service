@@ -1,7 +1,6 @@
 from camera import CV2Camera
 from dependency_injector import DependencyInjector
 from rfid_reader import RFIDReader
-import RPi.GPIO as GPIO
 import threading
 
 def start_camera_detection():
@@ -26,13 +25,10 @@ def start_camera_detection():
 def start_rfid_detection():
     DependencyInjector.initialize()
 
-    rfid_reader = RFIDReader(DependencyInjector.user_rfid_service, DependencyInjector.simple_MFRC522)
+    rfid_reader = RFIDReader(DependencyInjector.user_rfid_service)
 
     while True:
-        try:
-            rfid_reader.read_rfid()  
-        finally:
-            GPIO.cleanup()
+        rfid_reader.read_rfid()  
 
 if __name__ == '__main__':
     threading.Thread(target=start_rfid_detection).start()

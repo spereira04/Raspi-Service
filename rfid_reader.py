@@ -7,14 +7,11 @@ class RFIDReader:
     user_rfid_service: UserRFIDService
     reader: SimpleMFRC522
 
-    def __init__(self, user_rfid_service, simple_MFRC522):
+    def __init__(self, user_rfid_service):
         self.user_rfid_service = user_rfid_service
-		self.reader = simple_MFRC522
+        self.reader = SimpleMFRC522()
 
     def read_rfid(self):
-        id, _ = reader.read()
-        # print(id)
+        id, _ = self.reader.read()
 
         self.user_rfid_service.look_for_user_rfid(int(id))
-
-
