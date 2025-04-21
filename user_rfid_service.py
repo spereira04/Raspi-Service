@@ -7,7 +7,7 @@ from access_service import AccessService
 from PIL import Image
 import io
 
-class UserVectorsService:
+class UserRFIDService:
 
     baseUrl: str
     accessService: AccessService
@@ -16,13 +16,10 @@ class UserVectorsService:
         self.baseUrl = baseUrl
         self.accessService = accessService
 
-    def look_for_similar_user_vector(self, buffer):
+    def look_for_user_rfid(self, rfid):
         access_time = int(time.time())
-        ibed = imgbeddings()
-
-        embedding = ibed.to_embeddings(Image.open(io.BytesIO(buffer)))[0]
         
-        response = requests.get(url=self.baseUrl+'/vector', json={'vector': np.float32(embedding).tolist()})
+        response = requests.get(url=self.baseUrl+'/rfid/{rfid}')
         body = json.loads(response.content)
         
         gresponse: str
