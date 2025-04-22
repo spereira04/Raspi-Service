@@ -19,7 +19,7 @@ class UserRFIDService:
     def look_for_user_rfid(self, rfid):
         access_time = int(time.time())
         
-        response = requests.get(url=self.baseUrl+'/rfid/{rfid}')
+        response = requests.get(url=self.baseUrl+'/rfid/'+str(rfid))
         body = json.loads(response.content)
         
         gresponse: str
