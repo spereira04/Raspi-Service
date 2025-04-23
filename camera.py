@@ -27,6 +27,8 @@ class CV2Camera:
 
     def __init__(self, user_vectors_service: UserVectorsService):
         self.user_vectors_service = user_vectors_service
+        self.video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+        self.video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
     def _can_take_picture(self):
         current_time = datetime.datetime.now()
@@ -67,9 +69,9 @@ class CV2Camera:
         self._take_picture(x, y, w, h)
 
     def show_frame(self, winname):
-        try:
+        if(self.current_frame_ret):
             cv2.imshow(winname, self.current_frame)
-        except:
+        else:
             print('no image')
 
     def check_for_exit(self):
