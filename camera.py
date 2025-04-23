@@ -10,11 +10,11 @@ class CV2Camera:
     user_vectors_service: UserVectorsService
 
     haar_cascade = cv2.CascadeClassifier(cv2.data.haarcascades +  'haarcascade_frontalface_default.xml')
-    # video_capture = cv2.VideoCapture(0)
+    video_capture = cv2.VideoCapture(0)
 
-    pipeline = "nvarguscamerasrc ! video/x-raw(memory:NVMM), width=(int)1920, height=(int)1080, format=(string)NV12, framerate=(fraction)30/1 ! nvvidconv ! video/x-raw, format=(string)BGRx ! videoconvert ! video/x-raw, format=(string)BGR ! appsink"
-    # Create a VideoCapture object, using the pipeline
-    video_capture = cv2.VideoCapture(pipeline, cv2.CAP_GSTREAMER)
+    # pipeline = "nvarguscamerasrc ! video/x-raw(memory:NVMM), width=(int)1920, height=(int)1080, format=(string)NV12, framerate=(fraction)30/1 ! nvvidconv ! video/x-raw, format=(string)BGRx ! videoconvert ! video/x-raw, format=(string)BGR ! appsink"
+    # # Create a VideoCapture object, using the pipeline
+    # video_capture = cv2.VideoCapture(pipeline, cv2.CAP_GSTREAMER)
 
     image_last_time_taken = datetime.datetime.now()
 
