@@ -63,7 +63,10 @@ class CV2Camera:
         self._take_picture(x, y, w, h)
 
     def show_frame(self, winname):
+        cv2.namedWindow(winname, cv2.WINDOW_NORMAL)
+        cv2.resizeWindow(winname, 600, 400)
         cv2.imshow(winname, self.current_frame)
+
 
     def check_for_exit(self):
         return cv2.waitKey(1) == ord("q")
