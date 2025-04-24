@@ -82,7 +82,3 @@ class CV2Camera:
     def exit(self):
         self.video_capture.close()
         cv2.destroyAllWindows()
-
-    def verify_input_video_capture_device(self):
-        if not self.video_capture.isOpened():
-            sys.exit('Video source not found')

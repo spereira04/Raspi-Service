@@ -8,8 +8,6 @@ def start_camera_detection():
 
     camera = CV2Camera(DependencyInjector.user_vectors_service)
 
-    camera.verify_input_video_capture_device()
-
     while True:
         camera.read_frame()
 
