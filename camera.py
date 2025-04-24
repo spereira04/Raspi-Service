@@ -4,14 +4,15 @@ import datetime
 import sys
 from user_vectors_service import UserVectorsService
 import threading
+from picamera2 import Picamera2
 
 class CV2Camera:
 
     user_vectors_service: UserVectorsService
 
     haar_cascade = cv2.CascadeClassifier(cv2.data.haarcascades +  'haarcascade_frontalface_default.xml')
-    video_capture = cv2.VideoCapture(0)
-
+    # video_capture = cv2.VideoCapture(0)
+    video_capture = Picamera2()
     # pipeline = "nvarguscamerasrc ! video/x-raw(memory:NVMM), width=(int)1920, height=(int)1080, format=(string)NV12, framerate=(fraction)30/1 ! nvvidconv ! video/x-raw, format=(string)BGRx ! videoconvert ! video/x-raw, format=(string)BGR ! appsink"
     # # Create a VideoCapture object, using the pipeline
     # video_capture = cv2.VideoCapture(pipeline, cv2.CAP_GSTREAMER)
@@ -27,8 +28,9 @@ class CV2Camera:
 
     def __init__(self, user_vectors_service: UserVectorsService):
         self.user_vectors_service = user_vectors_service
-        self.video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-        self.video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+        self.video_capture.configure(self.video_capture.create_preview_configuration())
+        # self.video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+        # self.video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
     def _can_take_picture(self):
         current_time = datetime.datetime.now()
@@ -47,7 +49,7 @@ class CV2Camera:
 
 
     def read_frame(self):
-        self.current_frame_ret, self.current_frame = self.video_capture.read()
+        self.current_frame = self.video_capture.capture_array()
 
     def detect_faces(self):
         self.current_faces = self.haar_cascade.detectMultiScale(
@@ -69,16 +71,16 @@ class CV2Camera:
         self._take_picture(x, y, w, h)
 
     def show_frame(self, winname):
-        if(self.current_frame_ret):
+        try:
             cv2.imshow(winname, self.current_frame)
-        else:
+        except:
             print('no image')
 
     def check_for_exit(self):
         return cv2.waitKey(1) == ord("q")
 
     def exit(self):
-        self.video_capture.release()
+        self.video_capture.close()
         cv2.destroyAllWindows()
 
     def verify_input_video_capture_device(self):
