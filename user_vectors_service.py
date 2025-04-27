@@ -12,16 +12,17 @@ class UserVectorsService:
 
     baseUrl: str
     accessService: AccessService
+    ibed: imgbeddings
 
     def __init__(self, baseUrl, accessService):
         self.baseUrl = baseUrl
         self.accessService = accessService
+        self.ibed = imgbeddings(use_fast = True)
 
     def look_for_similar_user_vector(self, buffer):
         access_time = int(time.time())
-        ibed = imgbeddings()
 
-        embedding = ibed.to_embeddings(Image.open(io.BytesIO(buffer)))[0]
+        embedding = self.ibed.to_embeddings(Image.open(io.BytesIO(buffer)))[0]
         
         gresponse: str
         try:
