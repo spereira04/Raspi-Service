@@ -1,13 +1,4 @@
-import transformers
-
-_real_from_pretrained = transformers.AutoImageProcessor.from_pretrained
-
-def _patched_from_pretrained(*args, **kwargs):
-    kwargs["use_fast"] = True
-    return _real_from_pretrained(*args, **kwargs)
-
-transformers.AutoImageProcessor.from_pretrained = _patched_from_pretrained
-
+import warnings
 from imgbeddings import imgbeddings
 import requests
 import numpy as np
@@ -18,6 +9,8 @@ from PIL import Image
 import io
 import grpc
 
+warnings.filterwarnings("ignore", category=FutureWarning, message=".*feature_extractor.*")
+warnings.filterwarnings("ignore", category=FutureWarning, message=".*use_fast.*")
 class UserVectorsService:
 
     baseUrl: str
