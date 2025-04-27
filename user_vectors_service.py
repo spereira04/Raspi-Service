@@ -10,7 +10,6 @@ import io
 import grpc
 
 warnings.filterwarnings("ignore", category=FutureWarning, message=".*feature_extractor.*")
-warnings.filterwarnings("ignore", category=FutureWarning, message=".*use_fast.*")
 class UserVectorsService:
 
     baseUrl: str
