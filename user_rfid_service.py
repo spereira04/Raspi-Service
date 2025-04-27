@@ -1,11 +1,8 @@
-from imgbeddings import imgbeddings
 import requests
-import numpy as np
 import time
 import json
 from access_service import AccessService
-from PIL import Image
-import io
+import grpc
 
 class UserRFIDService:
 
