@@ -1,3 +1,13 @@
+import transformers
+
+_real_from_pretrained = transformers.AutoImageProcessor.from_pretrained
+
+def _patched_from_pretrained(*args, **kwargs):
+    kwargs["use_fast"] = True
+    return _real_from_pretrained(*args, **kwargs)
+
+transformers.AutoImageProcessor.from_pretrained = _patched_from_pretrained
+
 from imgbeddings import imgbeddings
 import requests
 import numpy as np
@@ -17,7 +27,7 @@ class UserVectorsService:
     def __init__(self, baseUrl, accessService):
         self.baseUrl = baseUrl
         self.accessService = accessService
-        self.ibed = imgbeddings(use_fast = True)
+        self.ibed = imgbeddings()
 
     def look_for_similar_user_vector(self, buffer):
         access_time = int(time.time())
