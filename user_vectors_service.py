@@ -23,20 +23,20 @@ class UserVectorsService:
 
         embedding = ibed.to_embeddings(Image.open(io.BytesIO(buffer)))[0]
         
+        gresponse: str
         try:
             # User Service
             response = requests.get(url=self.baseUrl+'/vector', json={'vector': np.float32(embedding).tolist()})
             body = json.loads(response.content)
 
             # Access Service
-            gresponse: str
             if(response.status_code == 200):
                 gresponse = self.accessService.send_successful_access(access_time, body['firstName'], body['lastName'], body['cid'])
             else:
                 gresponse = self.accessService.send_unsuccessful_access(access_time)
-        except requests.exceptions.ConnectionError as conn_error:
+        except requests.exceptions.ConnectionError:
             print("No connection to the User Service")
-        except grpc._channel._InactiveRpcError as conn_error:
+        except grpc._channel._InactiveRpcError:
             print("No connection to the Access Service")
 
         print(gresponse)

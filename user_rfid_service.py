@@ -18,15 +18,21 @@ class UserRFIDService:
 
     def look_for_user_rfid(self, rfid):
         access_time = int(time.time())
-        
-        response = requests.get(url=self.baseUrl+'/rfid/'+str(rfid))
-        body = json.loads(response.content)
-        
+
         gresponse: str
-        if(response.status_code == 200):
-            gresponse = self.accessService.send_successful_access(access_time, body['firstName'], body['lastName'], body['cid'])
-        else:
-            gresponse = self.accessService.send_unsuccessful_access(access_time)
-        
+        try:    
+            response = requests.get(url=self.baseUrl+'/rfid/'+str(rfid))
+            body = json.loads(response.content)
+            
+            if(response.status_code == 200):
+                gresponse = self.accessService.send_successful_access(access_time, body['firstName'], body['lastName'], body['cid'])
+            else:
+                gresponse = self.accessService.send_unsuccessful_access(access_time)
+        except requests.exceptions.ConnectionError:
+            print("No connection to the User Service")
+        except grpc._channel._InactiveRpcError:
+            print("No connection to the Access Service")
+
+
         print(gresponse)
         # handle response
