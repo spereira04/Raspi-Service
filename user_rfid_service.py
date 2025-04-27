@@ -30,9 +30,10 @@ class UserRFIDService:
                 gresponse = self.accessService.send_unsuccessful_access(access_time)
         except requests.exceptions.ConnectionError:
             print("No connection to the User Service")
+            return
         except grpc._channel._InactiveRpcError:
             print("No connection to the Access Service")
-
+            return
 
         print(gresponse)
         # handle response
