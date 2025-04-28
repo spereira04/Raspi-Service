@@ -1,7 +1,8 @@
-from camera import CV2Camera
-from dependency_injector import DependencyInjector
-from rfid_reader import RFIDReader
+from hardware_controllers.camera import CV2Camera
+from config.dependency_injector import DependencyInjector
+from hardware_controllers.rfid_reader import RFIDReader
 import threading
+import time
 
 def start_camera_detection():
     DependencyInjector.initialize()
@@ -27,6 +28,7 @@ def start_rfid_detection():
 
     while True:
         rfid_reader.read_rfid()  
+        time.sleep(3)
 
 if __name__ == '__main__':
     threading.Thread(target=start_rfid_detection).start()

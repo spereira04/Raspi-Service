@@ -1,6 +1,6 @@
-from user_vectors_service import UserVectorsService
-from user_rfid_service import UserRFIDService
-from access_service import AccessService
+from services.user_vectors_service import UserVectorsService
+from services.user_rfid_service import UserRFIDService
+from services.access_service import AccessService
 
 import os
 from dotenv import find_dotenv, load_dotenv

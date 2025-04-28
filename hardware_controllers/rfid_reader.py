@@ -1,4 +1,4 @@
-from user_rfid_service import UserRFIDService
+from services.user_rfid_service import UserRFIDService
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 
