@@ -1,7 +1,7 @@
 import requests
 import time
 import json
-from access_service import AccessService
+from services.access_service import AccessService
 import grpc
 
 class UserRFIDService:
