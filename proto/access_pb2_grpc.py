@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-import proto.access_pb2 as access__pb2
+import access_pb2 as access__pb2
 
 GRPC_GENERATED_VERSION = '1.71.0'
 GRPC_VERSION = grpc.__version__
@@ -44,6 +44,11 @@ class AccessStub(object):
                 request_serializer=access__pb2.FailedAccessDTO.SerializeToString,
                 response_deserializer=access__pb2.SubmitResponseDTO.FromString,
                 _registered_method=True)
+        self.Connect = channel.unary_unary(
+                '/Access/Connect',
+                request_serializer=access__pb2.DoorCredentialsDTO.SerializeToString,
+                response_deserializer=access__pb2.DoorTokenDTO.FromString,
+                _registered_method=True)
 
 
 class AccessServicer(object):
@@ -61,6 +66,12 @@ class AccessServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Connect(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_AccessServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -73,6 +84,11 @@ def add_AccessServicer_to_server(servicer, server):
                     servicer.SubmitFailedAccess,
                     request_deserializer=access__pb2.FailedAccessDTO.FromString,
                     response_serializer=access__pb2.SubmitResponseDTO.SerializeToString,
+            ),
+            'Connect': grpc.unary_unary_rpc_method_handler(
+                    servicer.Connect,
+                    request_deserializer=access__pb2.DoorCredentialsDTO.FromString,
+                    response_serializer=access__pb2.DoorTokenDTO.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -129,6 +145,33 @@ class Access(object):
             '/Access/SubmitFailedAccess',
             access__pb2.FailedAccessDTO.SerializeToString,
             access__pb2.SubmitResponseDTO.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Connect(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/Access/Connect',
+            access__pb2.DoorCredentialsDTO.SerializeToString,
+            access__pb2.DoorTokenDTO.FromString,
             options,
             channel_credentials,
             insecure,
