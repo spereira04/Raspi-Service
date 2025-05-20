@@ -8,6 +8,7 @@ class Raspi:
         self.door_name = door_name
         self.passcode = passcode
         self.door_access_level = door_access_level
+        print(self.door_name, self.passcode, self.door_access_level)
 
     def set_access_token(self, token):
         print(token)
