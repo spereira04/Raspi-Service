@@ -1,4 +1,4 @@
-opencv-python-headless
+opencv-python
 imgbeddings
 psycopg2-binary
 grpcio-tools

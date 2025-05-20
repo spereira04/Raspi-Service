@@ -8,6 +8,7 @@ from services.access_service import AccessService
 from PIL import Image
 import io
 import grpc
+from config.raspi import Raspi
 
 warnings.filterwarnings("ignore", category=FutureWarning, message=".*feature_extractor.*")
 class UserVectorsService:
@@ -15,11 +16,13 @@ class UserVectorsService:
     baseUrl: str
     accessService: AccessService
     ibed: imgbeddings
+    raspi: Raspi
 
-    def __init__(self, baseUrl, accessService):
+    def __init__(self, baseUrl, accessService, raspi):
         self.baseUrl = baseUrl
         self.accessService = accessService
         self.ibed = imgbeddings()
+        self.raspi = raspi
 
     def look_for_similar_user_vector(self, buffer):
         access_time = int(time.time())
@@ -29,7 +32,8 @@ class UserVectorsService:
         gresponse: str
         try:
             # User Service
-            response = requests.get(url=self.baseUrl+'/vector', json={'vector': np.float32(embedding).tolist()})
+            params = {'doorName' : self.raspi.door_name }
+            response = requests.get(url=self.baseUrl+'/vector', json={'vector': np.float32(embedding).tolist()}, params=params)
             body = json.loads(response.content)
 
             # Access Service

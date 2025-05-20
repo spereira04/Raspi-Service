@@ -31,5 +31,6 @@ def start_rfid_detection():
         time.sleep(3)
 
 if __name__ == '__main__':
+    
     threading.Thread(target=start_rfid_detection).start()
     start_camera_detection()
