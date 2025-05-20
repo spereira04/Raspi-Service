@@ -10,4 +10,5 @@ class Raspi:
         self.door_access_level = door_access_level
 
     def set_access_token(self, token):
+        print(token)
         self.access_token = token
