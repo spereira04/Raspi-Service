@@ -45,6 +45,7 @@ class DependencyInjector:
         load_dotenv(dotenv_path)
 
         DependencyInjector._create_raspi()
+        DependencyInjector._create_auth_service()
         DependencyInjector._create_access_service()
         DependencyInjector._create_user_vectors_service()
         DependencyInjector._create_user_rfid_service()
