@@ -10,4 +10,4 @@ rpi-lgpio
 
 
 comando generador de archivos para grpc
-python -m grpc_tools.protoc -I. --python_out=. --pyi_out=. --grpc_python_out=. ./access.proto
+python -m grpc_tools.protoc -I. --python_out=. --pyi_out=. --grpc_python_out=. ./proto/access.proto

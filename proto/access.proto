@@ -7,18 +7,15 @@ option java_outer_classname = "AccessProto";
 service Access {
     rpc SubmitSuccessfulAccess(SuccessfulAccessDTO) returns (SubmitResponseDTO) {} 
     
-    rpc SubmitFailedAccess(FailedAccessDTO) returns (SubmitResponseDTO) {} 
-
-    rpc Connect(DoorCredentialsDTO) returns (DoorTokenDTO) {}
+    rpc SubmitFailedAccess(FailedAccessDTO) returns (SubmitResponseDTO) {}
 }
 
 message SuccessfulAccessDTO {
     int64 time = 1;
-    string firstName = 2;
-    string lastName = 3;
-    string cid = 4;
-    AccessTypeEnum accessType = 5;
-    string doorName = 6;
+    string fullName = 2;
+    string cid = 3;
+    AccessTypeEnum accessType = 4;
+    string doorName = 5;
 }
 
 message FailedAccessDTO {
@@ -34,14 +31,4 @@ enum AccessTypeEnum {
 
 message SubmitResponseDTO {
     string response = 1;
-}
-
-message DoorCredentialsDTO {
-    string doorName = 1;
-    int32 doorAccessLevel = 2;
-    string passcode = 3;
-}
-
-message DoorTokenDTO {
-    string token = 1;
 }

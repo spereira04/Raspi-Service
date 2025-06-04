@@ -13,20 +13,18 @@ CAMERA: AccessTypeEnum
 RFID: AccessTypeEnum
 
 class SuccessfulAccessDTO(_message.Message):
-    __slots__ = ("time", "firstName", "lastName", "cid", "accessType", "doorName")
+    __slots__ = ("time", "fullName", "cid", "accessType", "doorName")
     TIME_FIELD_NUMBER: _ClassVar[int]
-    FIRSTNAME_FIELD_NUMBER: _ClassVar[int]
-    LASTNAME_FIELD_NUMBER: _ClassVar[int]
+    FULLNAME_FIELD_NUMBER: _ClassVar[int]
     CID_FIELD_NUMBER: _ClassVar[int]
     ACCESSTYPE_FIELD_NUMBER: _ClassVar[int]
     DOORNAME_FIELD_NUMBER: _ClassVar[int]
     time: int
-    firstName: str
-    lastName: str
+    fullName: str
     cid: str
     accessType: AccessTypeEnum
     doorName: str
-    def __init__(self, time: _Optional[int] = ..., firstName: _Optional[str] = ..., lastName: _Optional[str] = ..., cid: _Optional[str] = ..., accessType: _Optional[_Union[AccessTypeEnum, str]] = ..., doorName: _Optional[str] = ...) -> None: ...
+    def __init__(self, time: _Optional[int] = ..., fullName: _Optional[str] = ..., cid: _Optional[str] = ..., accessType: _Optional[_Union[AccessTypeEnum, str]] = ..., doorName: _Optional[str] = ...) -> None: ...
 
 class FailedAccessDTO(_message.Message):
     __slots__ = ("time", "accessType", "doorName")
@@ -43,19 +41,3 @@ class SubmitResponseDTO(_message.Message):
     RESPONSE_FIELD_NUMBER: _ClassVar[int]
     response: str
     def __init__(self, response: _Optional[str] = ...) -> None: ...
-
-class DoorCredentialsDTO(_message.Message):
-    __slots__ = ("doorName", "doorAccessLevel", "passcode")
-    DOORNAME_FIELD_NUMBER: _ClassVar[int]
-    DOORACCESSLEVEL_FIELD_NUMBER: _ClassVar[int]
-    PASSCODE_FIELD_NUMBER: _ClassVar[int]
-    doorName: str
-    doorAccessLevel: int
-    passcode: str
-    def __init__(self, doorName: _Optional[str] = ..., doorAccessLevel: _Optional[int] = ..., passcode: _Optional[str] = ...) -> None: ...
-
-class DoorTokenDTO(_message.Message):
-    __slots__ = ("token",)
-    TOKEN_FIELD_NUMBER: _ClassVar[int]
-    token: str
-    def __init__(self, token: _Optional[str] = ...) -> None: ...

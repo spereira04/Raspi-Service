@@ -5,8 +5,6 @@ import threading
 import time
 
 def start_camera_detection():
-    DependencyInjector.initialize()
-
     camera = CV2Camera(DependencyInjector.user_vectors_service)
 
     while True:
@@ -31,6 +29,15 @@ def start_rfid_detection():
         time.sleep(3)
 
 if __name__ == '__main__':
+    DependencyInjector.initialize()
+
+    auth_service = DependencyInjector.auth_service
+
+    connected = False
+
+    while (not connected):
+        print("Attempting login")
+        connected = auth_service.log_in()
     
     threading.Thread(target=start_rfid_detection).start()
     start_camera_detection()

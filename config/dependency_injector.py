@@ -1,6 +1,7 @@
 from services.user_vectors_service import UserVectorsService
 from services.user_rfid_service import UserRFIDService
 from services.access_service import AccessService
+from services.auth_service import AuthService
 from config.raspi import Raspi
 
 import os
@@ -12,6 +13,7 @@ class DependencyInjector:
     user_rfid_service: UserRFIDService
 
     access_service: AccessService
+    auth_service: AuthService
 
     raspi: Raspi
 
@@ -28,8 +30,12 @@ class DependencyInjector:
         DependencyInjector.access_service = AccessService(os.getenv("access-service-base-url"), DependencyInjector.raspi)
 
     @staticmethod
+    def _create_auth_service():
+        DependencyInjector.auth_service = AuthService(os.getenv("user-service-base-url"), DependencyInjector.raspi)
+
+    @staticmethod
     def _create_raspi():
-        DependencyInjector.raspi = Raspi(os.getenv("door-name"), os.getenv("passcode"), int(os.getenv("door-access-level")))
+        DependencyInjector.raspi = Raspi(os.getenv("door-name"), os.getenv("passcode"))
 
     @staticmethod
     def initialize():
