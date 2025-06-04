@@ -38,7 +38,7 @@ class UserVectorsService:
 
             # Access Service
             if(response.status_code == 200):
-                gresponse = self.accessService.send_successful_access(access_time, body['firstName'], body['lastName'], body['cid'])
+                gresponse = self.accessService.send_successful_access(access_time, body['fullName'], body['cid'])
             else:
                 gresponse = self.accessService.send_unsuccessful_access(access_time)
         except requests.exceptions.ConnectionError:
