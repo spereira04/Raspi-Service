@@ -16,6 +16,7 @@ class AuthService:
             print('Raspi door name: ', self.raspi.door_name)
             print('Raspi passcode: ', self.raspi.passcode)
             data = {"doorName": self.raspi.door_name, "passcode": self.raspi.passcode}
+            print(data)
             response = requests.post(url=self.baseUrl+'/doors/connect', data=data, headers={"Content-Type": "application/json"})
             print(response.json())
             print('=============================================')
