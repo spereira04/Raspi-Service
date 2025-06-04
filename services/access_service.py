@@ -12,7 +12,6 @@ class AccessService:
         channel = grpc.insecure_channel(channel_url)
         self.stub = proto.access_pb2_grpc.AccessStub(channel)
         self.raspi = raspi
-        self.connect()
 
 
     def send_successful_access(self, time, firstName, lastName, cid):
