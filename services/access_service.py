@@ -10,6 +10,8 @@ class AccessService:
 
     def __init__(self, channel_url, raspi):
         channel = grpc.insecure_channel(channel_url)
+        print(channel_url)
+        print(channel)
         self.stub = proto.access_pb2_grpc.AccessStub(channel)
         self.raspi = raspi
 
