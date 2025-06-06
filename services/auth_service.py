@@ -16,6 +16,8 @@ class AuthService:
             data = {"doorName": self.raspi.door_name, "passcode": self.raspi.passcode}
             response = requests.post(url=self.baseUrl+'/doors/connect', json=data)
             self.raspi.set_access_token(response.json()['token'])
+            print(self.raspi.access_token)
+            print(response.json()['token'])
             return True
         except requests.exceptions.ConnectionError:
             print("No connection to the User Service")
