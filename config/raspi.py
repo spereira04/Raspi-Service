@@ -8,4 +8,4 @@ class Raspi:
         self.passcode = passcode
 
     def set_access_token(self, token):
-        self.access_token = token
+        self.access_token = "Bearer " + token
