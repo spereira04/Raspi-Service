@@ -14,9 +14,10 @@ class AccessService:
         self.raspi = raspi
 
 
-    def send_successful_access(self, time, full_name, cid):
-        successfulAccessDTO = proto.access_pb2.SuccessfulAccessDTO(time=time, fullName=full_name, cid=cid)
+    def send_successful_access(self, time, full_name, cid, accessType):
+        successfulAccessDTO = proto.access_pb2.SuccessfulAccessDTO(time=time, fullName=full_name, cid=cid, accessType=accessType, doorName=self.raspi.door_name)
         return self.stub.SubmitSuccessfulAccess(successfulAccessDTO, metadata = [('authorization', self.raspi.access_token)])
 
-    def send_unsuccessful_access(self, time):
-        return self.stub.SubmitFailedAccess(proto.access_pb2.FailedAccessDTO(time=time), metadata = [('authorization', self.raspi.access_token)])
+    def send_unsuccessful_access(self, time, accessType):
+        failedAccessDTO = proto.access_pb2.FailedAccessDTO(time=time, accessType=accessType, doorName=self.raspi.door_name)
+        return self.stub.SubmitFailedAccess(failedAccessDTO, metadata = [('authorization', self.raspi.access_token)])

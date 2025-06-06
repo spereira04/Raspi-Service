@@ -4,6 +4,7 @@ import json
 from services.access_service import AccessService
 import grpc
 from config.raspi import Raspi
+from proto.access_pb2 import AccessTypeEnum
 
 class UserRFIDService:
 
@@ -26,9 +27,9 @@ class UserRFIDService:
             body = json.loads(response.content)
             
             if(response.status_code == 200):
-                gresponse = self.accessService.send_successful_access(access_time, body['fullName'], body['cid'])
+                gresponse = self.accessService.send_successful_access(access_time, body['fullName'], body['cid'], AccessTypeEnum.RFID)
             else:
-                gresponse = self.accessService.send_unsuccessful_access(access_time)
+                gresponse = self.accessService.send_unsuccessful_access(access_time, AccessTypeEnum.RFID)
         except requests.exceptions.ConnectionError:
             print("No connection to the User Service")
             return

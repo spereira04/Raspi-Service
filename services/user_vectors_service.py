@@ -9,6 +9,7 @@ from PIL import Image
 import io
 import grpc
 from config.raspi import Raspi
+from proto.access_pb2 import AccessTypeEnum
 
 warnings.filterwarnings("ignore", category=FutureWarning, message=".*feature_extractor.*")
 class UserVectorsService:
@@ -38,9 +39,9 @@ class UserVectorsService:
 
             # Access Service
             if(response.status_code == 200):
-                gresponse = self.accessService.send_successful_access(access_time, body['fullName'], body['cid'])
+                gresponse = self.accessService.send_successful_access(access_time, body['fullName'], body['cid'], AccessTypeEnum.CAMERA)
             else:
-                gresponse = self.accessService.send_unsuccessful_access(access_time)
+                gresponse = self.accessService.send_unsuccessful_access(access_time, AccessTypeEnum.CAMERA)
         except requests.exceptions.ConnectionError:
             print("No connection to the User Service")
             return
