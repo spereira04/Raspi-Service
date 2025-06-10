@@ -24,7 +24,7 @@ class UserRFIDService:
         try:    
             params = {'doorName' : self.raspi.door_name }
             response = requests.get(url=self.baseUrl+'/rfid/'+str(rfid), params=params)
-            print(self.raspi.failed_streak)
+            print(self.raspi.failed_streak, " ", self.raspi.max_attempts)
             body = json.loads(response.content)
             
             if(response.status_code == 200):
