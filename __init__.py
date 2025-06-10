@@ -4,7 +4,7 @@ from hardware_controllers.rfid_reader import RFIDReader
 import threading
 import time
 
-def log_in():
+def log_in(type):
     auth_service = DependencyInjector.auth_service
 
     connected = False
@@ -12,6 +12,7 @@ def log_in():
     while (not connected):
         print("Attempting login")
         connected = auth_service.log_in()
+    print(type + " Connected!")
 
 def start_camera_detection():
     camera = CV2Camera(DependencyInjector.user_vectors_service)
@@ -31,7 +32,7 @@ def start_camera_detection():
 def start_rfid_detection():
     DependencyInjector.initialize()
 
-    log_in()
+    log_in("RFID")
 
     rfid_reader = RFIDReader(DependencyInjector.user_rfid_service)
 
@@ -42,7 +43,7 @@ def start_rfid_detection():
 if __name__ == '__main__':
     DependencyInjector.initialize()
 
-    log_in()
+    log_in("Camera")
     
     threading.Thread(target=start_rfid_detection).start()
     start_camera_detection()
