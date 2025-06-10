@@ -8,7 +8,7 @@ class Raspi:
     def __init__(self, door_name, passcode, max_attempts):
         self.door_name = door_name
         self.passcode = passcode
-        self.max_attempts = max_attempts
+        self.max_attempts = int(max_attempts)
         self.failed_streak = 0
 
     def set_access_token(self, token):
