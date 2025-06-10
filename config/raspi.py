@@ -17,9 +17,10 @@ class Raspi:
     def triggers_fail(self):
         self.failed_streak += 1
         if(self.failed_streak == self.max_attempts):
+            print("wazaa")
             self.reset_failed_streak()
             return True
-            
+
         return False
             
 
