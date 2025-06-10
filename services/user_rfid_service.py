@@ -2,7 +2,6 @@ import requests
 import time
 import json
 from services.access_service import AccessService
-from services.email_service import EmailService
 import grpc
 from config.raspi import Raspi
 from proto.access_pb2 import AccessTypeEnum
@@ -12,7 +11,6 @@ class UserRFIDService:
     baseUrl: str
     accessService: AccessService
     raspi : Raspi
-    emailService: EmailService
 
     def __init__(self, baseUrl, accessService, raspi):
         self.baseUrl = baseUrl
