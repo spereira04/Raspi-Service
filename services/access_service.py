@@ -21,3 +21,8 @@ class AccessService:
     def send_unsuccessful_access(self, time, accessType):
         failedAccessDTO = proto.access_pb2.FailedAccessDTO(time=time, accessType=accessType, doorName=self.raspi.door_name)
         return self.stub.SubmitFailedAccess(failedAccessDTO, metadata = [('authorization', self.raspi.access_token)])
+    
+    def send_email(self, time, accessType):
+        failedAccessDTO = proto.access_pb2.FailedAccessDTO(time=time, accessType=accessType, doorName=self.raspi.door_name)
+        print("send email triggered")
+        return self.stub.SendEmail(failedAccessDTO, metadata = [('authorization', self.raspi.access_token)])

@@ -2,6 +2,7 @@ import requests
 import time
 import json
 from services.access_service import AccessService
+from services.email_service import EmailService
 import grpc
 from config.raspi import Raspi
 from proto.access_pb2 import AccessTypeEnum
@@ -11,6 +12,7 @@ class UserRFIDService:
     baseUrl: str
     accessService: AccessService
     raspi : Raspi
+    emailService: EmailService
 
     def __init__(self, baseUrl, accessService, raspi):
         self.baseUrl = baseUrl
@@ -28,8 +30,12 @@ class UserRFIDService:
             
             if(response.status_code == 200):
                 gresponse = self.accessService.send_successful_access(access_time, body['fullName'], body['cid'], AccessTypeEnum.RFID)
+                self.raspi.reset_failed_streak()
             else:
                 gresponse = self.accessService.send_unsuccessful_access(access_time, AccessTypeEnum.RFID)
+                if(self.raspi.triggers_fail()):
+                    self.accessService.send_email(access_time, AccessTypeEnum.RFID)
+
         except requests.exceptions.ConnectionError:
             print("No connection to the User Service")
             return

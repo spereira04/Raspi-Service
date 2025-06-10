@@ -35,7 +35,7 @@ class DependencyInjector:
 
     @staticmethod
     def _create_raspi():
-        DependencyInjector.raspi = Raspi(os.getenv("door-name"), os.getenv("passcode"))
+        DependencyInjector.raspi = Raspi(os.getenv("door-name"), os.getenv("passcode"), os.getenv("max-failed-attempts"))
 
     @staticmethod
     def initialize():

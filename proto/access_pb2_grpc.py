@@ -44,6 +44,11 @@ class AccessStub(object):
                 request_serializer=proto_dot_access__pb2.FailedAccessDTO.SerializeToString,
                 response_deserializer=proto_dot_access__pb2.SubmitResponseDTO.FromString,
                 _registered_method=True)
+        self.SendEmail = channel.unary_unary(
+                '/Access/SendEmail',
+                request_serializer=proto_dot_access__pb2.FailedAccessDTO.SerializeToString,
+                response_deserializer=proto_dot_access__pb2.SubmitResponseDTO.FromString,
+                _registered_method=True)
 
 
 class AccessServicer(object):
@@ -61,6 +66,12 @@ class AccessServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def SendEmail(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_AccessServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -71,6 +82,11 @@ def add_AccessServicer_to_server(servicer, server):
             ),
             'SubmitFailedAccess': grpc.unary_unary_rpc_method_handler(
                     servicer.SubmitFailedAccess,
+                    request_deserializer=proto_dot_access__pb2.FailedAccessDTO.FromString,
+                    response_serializer=proto_dot_access__pb2.SubmitResponseDTO.SerializeToString,
+            ),
+            'SendEmail': grpc.unary_unary_rpc_method_handler(
+                    servicer.SendEmail,
                     request_deserializer=proto_dot_access__pb2.FailedAccessDTO.FromString,
                     response_serializer=proto_dot_access__pb2.SubmitResponseDTO.SerializeToString,
             ),
@@ -127,6 +143,33 @@ class Access(object):
             request,
             target,
             '/Access/SubmitFailedAccess',
+            proto_dot_access__pb2.FailedAccessDTO.SerializeToString,
+            proto_dot_access__pb2.SubmitResponseDTO.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def SendEmail(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/Access/SendEmail',
             proto_dot_access__pb2.FailedAccessDTO.SerializeToString,
             proto_dot_access__pb2.SubmitResponseDTO.FromString,
             options,
