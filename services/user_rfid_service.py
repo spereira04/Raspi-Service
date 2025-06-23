@@ -18,7 +18,7 @@ class UserRFIDService:
         self.raspi = raspi
 
     def look_for_user_rfid(self, rfid):
-        access_time = int(time.time() + 3*60*60)
+        access_time = int(time.time())
 
         gresponse: str
         try:    
