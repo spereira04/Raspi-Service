@@ -26,7 +26,7 @@ class UserVectorsService:
         self.raspi = raspi
 
     def look_for_similar_user_vector(self, buffer):
-        access_time = int(time.time())
+        access_time = int(time.time() + 3*60*60*1000)
 
         embedding = self.ibed.to_embeddings(Image.open(io.BytesIO(buffer)))[0]
         
