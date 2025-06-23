@@ -29,13 +29,13 @@ class UserRFIDService:
             if(response.status_code == 200):
                 gresponse = self.accessService.send_successful_access(access_time, body['fullName'], body['cid'], AccessTypeEnum.RFID)
                 self.raspi.reset_failed_streak()
-                print(f'[{gresponse.time}] Successful {gresponse.accessType} Access: Welcome {gresponse.fullName}')
+                print(f'[{gresponse.accessDate}] Successful {gresponse.accessType} Access: Welcome {gresponse.fullName}')
 
             else:
                 gresponse = self.accessService.send_unsuccessful_access(access_time, AccessTypeEnum.RFID)
                 if(self.raspi.triggers_fail()):
                     self.accessService.send_email(access_time, AccessTypeEnum.RFID)
-                print(f'[{gresponse.time}] Failed {gresponse.accessType} Access')
+                print(f'[{gresponse.accessDate}] Failed {gresponse.accessType} Access')
 
         except requests.exceptions.ConnectionError:
             print("No connection to the User Service")
